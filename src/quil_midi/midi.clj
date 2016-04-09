@@ -1,3 +1,4 @@
-(ns quil-midi.midi) 
+(ns quil-midi.midi (:require [overtone.midi :as midi])) 
 
-(defn -main [] 1)
+(defn -main []
+  (print (midi/midi-devices)))
