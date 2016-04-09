@@ -12,9 +12,9 @@
            "IAC device located"
            (str "Cannot locate IAC device with name " iac-device-name))))
 
-(defn  connect []
+(def listener ([]
   (let [device (midi/midi-in iac-device-name)]
-    (midi/midi-handle-events device (fn [msg] (print msg)))))
+    (midi/midi-handle-events device (fn [msg] (print msg))))))
 
 
 
