@@ -1,4 +1,4 @@
-(ns quil-midi.midi (:require [overtone.midi :as midi])) 
+(ns quil-midi.midi2 (:require [overtone.midi :as midi])) 
 
 (def iac-device-name "virtual-midi")
 (def devices (midi/midi-devices))
