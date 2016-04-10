@@ -20,8 +20,8 @@
   [device]
   (.close device))
 
-(defn listener []
+(defn listener [func]
   "Returns a device that can be closed"
   (let [device (midi/midi-in iac-device-name)]
-    (midi/midi-handle-events device (fn [msg] (print msg)))
+    (midi/midi-handle-events device func)
     (:device device)))

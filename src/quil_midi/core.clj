@@ -1,8 +1,12 @@
 (ns quil-midi.core
   (:require [quil.core :as q]
-            [quil.middleware :as m]))
+            [quil.middleware :as m]
+            [quil-midi.midi :as midi]))
+
+(def bg-col (atom 0))
 
 (defn setup []
+  (midi/listener (fn [x] (let [vol (:data2 x)] (swap! bg-col (fn [x] vol)))))
   ; Set frame rate to 30 frames per second.
   (q/frame-rate 30)
   ; Set color mode to HSB (HSV) instead of default RGB.
@@ -19,7 +23,7 @@
 
 (defn draw-state [state]
   ; Clear the sketch by filling it with light-grey color.
-  (q/background 240)
+  (q/background @bg-col)
   ; Set circle color.
   (q/fill (:color state) 255 255)
   ; Calculate x and y coordinates of the circle.
