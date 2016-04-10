@@ -3,9 +3,9 @@
 (def iac-device-name "virtual-midi")
 (def devices (midi/midi-devices))
 
-(def iac?
-  (fn [device]
-    (= (get device :name) iac-device-name)))
+(defn iac?
+  [device]
+  (= (get device :name) iac-device-name))
 
 (defn check-iac[]
   (print (if (seq (filter iac? devices))
@@ -13,10 +13,11 @@
            (str "Cannot locate IAC device with name " iac-device-name))))
 
 ; Delete this
-(defn device []
+(defn get-input-device []
   (:device (midi/midi-in iac-device-name)))
 
-(defn close [device]
+(defn close
+  [device]
   (.close device))
 
 (defn listener []
