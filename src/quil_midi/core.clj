@@ -27,7 +27,7 @@
 
 (defn setup []
 
-  (print (clojure.reflect/reflect Capture))
+  (Capture/list)
   ;;(q/background 0)
   (q/frame-rate 10))
 
