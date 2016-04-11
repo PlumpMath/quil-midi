@@ -3,13 +3,16 @@
             [quil.middleware :as m]
             [quil-midi.midi :as midi]))
 
-(declare c-r)
+(declare c-r log-msg)
 
 (def state (atom 0))
 
-(midi/listener (fn [msg]
-                 (swap! state (fn [x]
-                                (c-r (:velocity msg))))))
+(defn log-msg [msg]
+  (print (str "Message recieved" (:velocity msg) "\n")))
+
+(defn update-atom [midi-msg]
+  (let [v :velocity :as midi-msg]))
+(midi/listener log-msg)
 
 (defn setup []
   (q/background 0)
