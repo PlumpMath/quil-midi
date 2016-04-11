@@ -3,11 +3,13 @@
             [quil.middleware :as m]
             [quil-midi.midi :as midi]))
 
+(declare c-r)
+
 (def state (atom 0))
 
 (midi/listener (fn [msg]
                  (swap! state (fn [x]
-                                (c-r (:data2 msg))))))
+                                (c-r (:velocity msg))))))
 
 (defn setup []
   (q/background 0)
