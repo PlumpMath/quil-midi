@@ -30,15 +30,13 @@
   (def cam (Capture. (quil.applet/current-applet) 400 400 (first (Capture/list))))
   (swap! camera assoc :instance cam)
   (.start (:instance @camera))
-  (q/frame-rate 1))
+  (q/frame-rate 10))
 
 (defn draw []
   (if (.available (:instance @camera))
     (.read (:instance @camera)))
 
-  (q/image (:instance @camera) 0 0)
-  )
-
+  (q/image (:instance @camera) 0 0 ))
 
 (q/defsketch quil-midi
   :size [400, 400]
