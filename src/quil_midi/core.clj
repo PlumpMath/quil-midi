@@ -26,6 +26,8 @@
 (midi/listener dispatch-midi-event)
 
 (defn setup []
+
+  (print (clojure.reflect/reflect Capture))
   ;;(q/background 0)
   (q/frame-rate 10))
 
