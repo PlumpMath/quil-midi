@@ -3,7 +3,8 @@
    [clojure.core.match :refer [match]]
    [quil.core :as q]
    [quil.middleware :as m]
-   [quil-midi.midi :as midi]))
+   [quil-midi.midi :as midi])
+  (:import [processing.video Capture]))
 
 (declare midi-to-255 log-msg update-atom)
 
@@ -25,18 +26,21 @@
 (midi/listener dispatch-midi-event)
 
 (defn setup []
-  (q/background 0)
+  ;;(q/background 0)
   (q/frame-rate 10))
 
 (defn draw []
-  (q/background (midi-to-255 (:val @state)))
-  (q/stroke 255 0 0)
-  (q/stroke-weight 5)
-  (q/line 0 0  (/ (* (:val @state) 400) 255) (/ (* (:val @state) 400) 255)))
+  ;;(q/background (midi-to-255 (:val @state)))
+  ;;(q/stroke 255 0 0)
+  ;;(q/stroke-weight 5)
+  ;;(q/line 0 0  (/ (* (:val @state) 400) 255) (/ (* (:val @state) 400) 255))
+
+  )
 
 (q/defsketch quil-midi
   :size [400, 400]
   :setup setup
+  :renderer :p3d
   :draw draw)
 
 ;; util
