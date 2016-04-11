@@ -9,6 +9,7 @@
 (declare midi-to-255 log-msg update-atom)
 
 (def state (atom {:val 0}))
+(def camera (atom {:instance nil}))
 
 ;; DISPATCH
 (defn dispatch-midi-event
@@ -26,22 +27,23 @@
 (midi/listener dispatch-midi-event)
 
 (defn setup []
-
-  (Capture/list)
-  ;;(q/background 0)
-  (q/frame-rate 10))
+  (def cam (Capture. (quil.applet/current-applet) 400 400 (first (Capture/list))))
+  (swap! camera assoc :instance cam)
+  (.start (:instance @camera))
+  (q/frame-rate 1))
 
 (defn draw []
-  ;;(q/background (midi-to-255 (:val @state)))
-  ;;(q/stroke 255 0 0)
-  ;;(q/stroke-weight 5)
-  ;;(q/line 0 0  (/ (* (:val @state) 400) 255) (/ (* (:val @state) 400) 255))
+  (if (.available (:instance @camera))
+    (.read (:instance @camera)))
 
+  (q/image (:instance @camera) 0 0)
   )
+
 
 (q/defsketch quil-midi
   :size [400, 400]
   :setup setup
+  :features [:keep-on-top]
   :renderer :p3d
   :draw draw)
 
