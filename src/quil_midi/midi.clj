@@ -1,5 +1,6 @@
 (ns quil-midi.midi (:require [overtone.midi :as midi])) 
 
+
 (def iac-device-name "virtual-midi")
 (def devices (midi/midi-devices))
 
@@ -25,3 +26,7 @@
   (let [device (midi/midi-in iac-device-name)]
     (midi/midi-handle-events device func)
     (:device device)))
+
+(defn log-msg [msg]
+  (print (str "_ " msg  "\n")))
+
