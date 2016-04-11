@@ -5,29 +5,39 @@
 
 (declare c-r log-msg)
 
-(def state (atom 0))
+(def state (atom {:val 0}))
 
 (defn log-msg [msg]
-  (print (str "Message recieved" (:velocity msg) "\n")))
+  (print (str "_ " (:velocity msg) (type (:velocity msg)) "\n")))
 
 (defn update-atom [midi-msg]
-  (let [v :velocity :as midi-msg]))
-(midi/listener log-msg)
+  (let [{v :velocity :as msg} midi-msg]
+    (if (not= v (:val @state))
+       (swap! state assoc :val v))
+      nil))
+
+(midi/listener update-atom)
 
 (defn setup []
   (q/background 0)
   (q/frame-rate 10))
 
 (defn draw []
-  (print @state)
-  (q/background @state))
+  (q/background (c-r (:val @state)))
+  (q/stroke 255 0 0)
+  (q/stroke-weight 5)
+  (q/line 0 0  (/ (* (:val @state) 400) 255) (/ (* (:val @state) 400) 255)))
 
 (q/defsketch quil-midi
-  :size [100, 100]
+  :size [400, 400]
   :setup setup
   :draw draw)
 
 ;; util
 
 (defn c-r [x]
-  (x * 255) / 127)
+  (/ (* x 255) 127))
+
+;; main
+
+(defn -main [] (print "loaded"))
