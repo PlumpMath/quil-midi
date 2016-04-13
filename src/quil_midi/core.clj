@@ -38,7 +38,8 @@
   (q/background 100)
   (doseq [x (range 0 (/ (q/width) n))
           y (range 0 (/ (q/height) n))]
-    (q/fill 0 (q/random 0 255))
+    (q/fill 0 (* n (/ x 5)) (q/random 0 255) (q/random 0 255))
+    (q/no-stroke) 
     (q/rect (* x n) (* y n) n n)
     )
 )
