@@ -28,28 +28,23 @@
       (swap! state assoc :val val)
       nil))
 
-(midi/listener dispatch-midi-event)
+;;(midi/listener dispatch-midi-event)
 
 (defn setup []
   (q/frame-rate 10))
 
 (defn draw []
-  (def h (q/random 0 400))
-  (q/background (midi-to-255 (:val @cc0)) (midi-to-255 (:val @cc1)) (midi-to-255 (:val @cc2)))
-  (q/stroke 255)
-  (q/stroke-weight 10)
-  (q/line 0 (midi-to-height (:val @cc2))  800 (midi-to-height (:val @cc0)))
-  (q/line 0 (midi-to-height (:val @cc1))  800 (midi-to-height (:val @cc1)))
-  (q/line 0 (midi-to-height (:val @cc0))  800 (midi-to-height (:val @cc2)))
-  (q/stroke-weight 2)
-  (q/stroke 0)
-  ;;(q/line (q/random 0 (q/height)) (q/random 0 (q/height)) (q/random 0 (q/width)) (q/random 0 (q/width)))
+  (q/background 100)
+  (doseq [x (range 0 (q/width))
+          y (range 0 (q/width))]
+    (q/stroke (q/random 0 255))
+    (q/point x y)
   )
+)
 
 (q/defsketch quil-midi
-  :size [800, 400]
+  :size [1000 800]
   :setup setup
-  :features [:keep-on-top]
   :renderer :p3d
   :draw draw)
 
