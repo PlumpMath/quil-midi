@@ -9,7 +9,7 @@
 (declare midi-to-255 log-msg update-atom midi-to-height)
 
 (def cc0 (atom {:val 0}))
-(def cc1 (atom {:val 0}))
+(def cc1 (atom {:val 0})) 
 (def cc2 (atom {:val 0}))
 (def camera (atom {:instance nil}))
 
@@ -28,18 +28,19 @@
       (swap! state assoc :val val)
       nil))
 
-;;(midi/listener dispatch-midi-event)
+(midi/listener dispatch-midi-event)
 
 (defn setup []
   (q/frame-rate 10))
 
 (defn draw []
+  (def n (+ (:val @cc0) 1))
   (q/background 100)
-  (doseq [x (range 0 (q/width))
-          y (range 0 (q/width))]
-    (q/stroke (q/random 0 255))
-    (q/point x y)
-  )
+  (doseq [x (range 0 (/ (q/width) n))
+          y (range 0 (/ (q/height) n))]
+    (q/fill 0 (q/random 0 255))
+    (q/rect (* x n) (* y n) n n)
+    )
 )
 
 (q/defsketch quil-midi
