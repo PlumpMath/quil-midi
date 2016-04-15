@@ -34,15 +34,10 @@
   (q/frame-rate 10))
 
 (defn draw []
-  (def n (+ (:val @cc0) 1))
-  (q/background 100)
-  (doseq [x (range 0 (/ (q/width) n))
-          y (range 0 (/ (q/height) n))]
-    (q/fill 0 (* n (/ x 5)) (q/random 0 255) (q/random 0 255))
-    (q/no-stroke) 
-    (q/rect (* x n) (* y n) n n)
-    )
-)
+  (def n (* (+ (:val @cc0) 1) 1))
+  (q/background (val @cc1))
+  (doseq [x (range 1 (/ (q/width) n))
+          y (range 1 (/ (q/height) n))]))
 
 (q/defsketch quil-midi
   :size [1000 800]
@@ -51,7 +46,6 @@
   :draw draw)
 
 ;; util
-
 (defn midi-to-255 [x]
   (/ (* x 255) 127))
 
@@ -59,5 +53,4 @@
   (/ (* x (q/height)) 127))
 
 ;; main
-
 (defn -main [] (print "loaded"))
