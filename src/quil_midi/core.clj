@@ -2,6 +2,7 @@
   (:require
    [clojure.core.match :refer [match]]
    [quil.core :as q]
+   [clojure.core.async :refer [sliding-buffer chan go <! <!! >! >!!] ]
    [quil.middleware :as m]
    [quil-midi.midi :as midi])
   (:import [processing.video Capture]))
@@ -28,7 +29,7 @@
       (swap! state assoc :val val)
       nil))
 
-(midi/listener dispatch-midi-event)
+(def midi-chan (midi/listener))
 
 (defn setup []
   (q/frame-rate 10))
