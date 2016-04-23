@@ -1,9 +1,7 @@
-(ns quil-midi.midi
-    (:require [overtone.midi :as midi]
-              [clojure.core.async :refer [sliding-buffer chan go <! <!! >! >!!]]))
+(ns quil-midi.midi (:require [overtone.midi :as midi])) 
 
 
-(def iac-device-name "virtual-midi")
+(def iac-device-name "virtual-midi") 
 (def devices (midi/midi-devices))
 
 (defn iac?
@@ -24,11 +22,10 @@
   (.close device))
 
 (defn listener []
-  "Returns a channel"
-  (let [device (midi/midi-in iac-device-name)
-        channel (chan (sliding-buffer 10))]
-    (midi/midi-handle-events device (fn [msg] (go (>! chan msg))))
-    channel))
+  "Returns a device that can be closed"
+  (let [device (midi/midi-in iac-device-name)]
+    (midi/midi-handle-events device (fn [x] (print (:velocity x))))
+    (:device device)))
 
 (defn log-msg [msg]
   (print (str "_ " msg  "\n")))
