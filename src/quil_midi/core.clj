@@ -34,13 +34,15 @@
   (q/frame-rate 10))
 
 (defn draw []
-  (def n (* (+ (:val @cc0) 1) 1))
-  (q/background (val @cc1))
-  (doseq [x (range 1 (/ (q/width) n))
-          y (range 1 (/ (q/height) n))]))
+  (q/background (midi-to-255 (:val @cc0)))
+  (doseq [x (range 1 (q/width))
+          y (range 1 (q/height))]
+    (if (= (mod x 2) 0)
+      (q/stroke (:val @cc0))
+      )))
 
 (q/defsketch quil-midi
-  :size [1000 800]
+  :size [400 400]
   :setup setup
   :renderer :p3d
   :draw draw)
