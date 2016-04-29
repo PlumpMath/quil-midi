@@ -16,7 +16,7 @@
 
 
 (defn update-state [state]
-  (:velocity (<!! midi/sliding-chan))
+  (midi-to-255 (:velocity (<!! midi/sliding-chan)))
   )
 
 (defn draw-state [state]
