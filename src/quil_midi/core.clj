@@ -1,8 +1,7 @@
 (ns quil-midi.core
   (:require
-   [clojure.core.match :refer [match]]
    [quil.core :as q]
-   [clojure.core.async :refer [sliding-buffer chan go <! <!! >! >!!] ]
+   [clojure.core.async :refer [sliding-buffer chan go <!! >!! alt!! alts!! timeout]]
    [quil.middleware :as m]
    [quil-midi.midi :as midi])
   (:import [processing.video Capture]))
@@ -11,20 +10,21 @@
 (def midi-chan (midi/listener))
 
 (defn setup []
-  (q/frame-rate 10)
-  0)
+  (q/frame-rate 30)
+  (q/color-mode :hsb)
+  {:cc0 0 :cc1 0})
 
 
-(defn update-state [state]
-  (midi-to-255 (:velocity (<!! midi/sliding-chan)))
-  )
+(defn update-state [state ]
+  {:cc0 (midi-to-255 (first (alts!! [midi/cc0] :default (:cc0 state))))
+   :cc1 (midi-to-255 (first (alts!! [midi/cc1] :default (:cc1 state))))})
 
 (defn draw-state [state]
-  (q/background state)
-  )
+  (q/background (:cc0 state) (:cc1 state) (:cc1 state)))
 
 (q/defsketch quil-midi
-  :size [400 400]
+  :features [:keep-on-top :exit-on-close]
+  :size [800 800]
   :middleware [m/fun-mode]
   :setup setup
   :update update-state
