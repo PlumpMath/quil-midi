@@ -15,7 +15,7 @@
   {:cc0 0 :cc1 0})
 
 
-(defn update-state [state ]
+(defn update-state [state]
   {:cc0 (midi-to-255 (first (alts!! [midi/cc0] :default (:cc0 state))))
    :cc1 (midi-to-255 (first (alts!! [midi/cc1] :default (:cc1 state))))})
 

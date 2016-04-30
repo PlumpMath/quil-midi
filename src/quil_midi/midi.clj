@@ -23,3 +23,11 @@
     (midi/midi-handle-events device dispatch)
     (:device device)))
 
+(defn try-val
+  [chan default]
+  (first (alts!! [chan] :default default)))
+
+(defn get-state-vals
+  [state]
+  {:cc0 (try-val cc0 (:cc0 state))
+   :cc1 (try-val cc1 (:cc1 state))})
