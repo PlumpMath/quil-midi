@@ -25,9 +25,11 @@
 
 (defn try-val
   [chan default]
+  "Tries to get a value from a midi channel or returns the default"
   (first (alts!! [chan] :default default)))
 
 (defn get-state-vals
   [state]
+  "Updates state from quil draw func"
   {:cc0 (try-val cc0 (:cc0 state))
    :cc1 (try-val cc1 (:cc1 state))})
