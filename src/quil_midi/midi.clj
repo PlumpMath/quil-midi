@@ -1,7 +1,7 @@
 (ns quil-midi.midi
   (:require [overtone.midi :as midi]
             [clojure.core.match :refer [match]]
-            [clojure.core.async :refer [go go-loop chan sliding-buffer >! >!! <! <!!]]))
+            [clojure.core.async :refer [go go-loop chan sliding-buffer >! >!! alts!!  <! <!!]]))
 
 (def cc0 (chan (sliding-buffer 1)))
 (def cc1 (chan (sliding-buffer 1)))
