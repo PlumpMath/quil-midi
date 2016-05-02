@@ -3,6 +3,8 @@
             [clojure.core.match :refer [match]]
             [clojure.core.async :refer [go go-loop chan sliding-buffer >! >!! alts!!  <! <!!]]))
 
+(declare cc0 cc1 iac-device-name dispatch listener try-val get-state-vals)
+
 (def cc0 (chan (sliding-buffer 1)))
 (def cc1 (chan (sliding-buffer 1)))
 

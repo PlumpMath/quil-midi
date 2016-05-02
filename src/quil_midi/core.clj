@@ -16,11 +16,10 @@
 
 
 (defn update-state [state]
-  {:cc0 (midi-to-255 (first (alts!! [midi/cc0] :default (:cc0 state))))
-   :cc1 (midi-to-255 (first (alts!! [midi/cc1] :default (:cc1 state))))})
+  (midi/get-state-vals state))
 
 (defn draw-state [state]
-  (q/background (:cc0 state) (:cc0 state) (:cc1 state)))
+  (q/background (:cc0 state)))
 
 (q/defsketch quil-midi
   :features [:keep-on-top :exit-on-close]
