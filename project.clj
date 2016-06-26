@@ -14,4 +14,4 @@
   :resource-paths ["library/gstreamer-java.jar"
                    "library/jna.jar"
                    "library/video.jar"
-                   "library/macosx64"]) 
+                   "library/macosx64"])

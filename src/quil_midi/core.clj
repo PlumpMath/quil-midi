@@ -6,20 +6,25 @@
    [quil-midi.midi :as midi])
   (:import [processing.video Capture]))
 
-(declare midi-to-255 midi-chan setup draw midi-to-height)
+(declare midi-to-255 midi-chan setup draw midi-to-height debug)
+(def debug false)
+(defn log [x]
+  (if (true? debug)
+  (println x))
+
+;; Initialize the listener
 (def midi-chan (midi/listener))
 
 (defn setup []
   (q/frame-rate 30)
-  (q/color-mode :hsb)
   {:cc0 0 :cc1 0})
 
-
 (defn update-state [state]
+  (log state)
   (midi/get-state-vals state))
 
 (defn draw-state [state]
-  (q/background (:cc0 state)))
+  (q/background (midi-to-255 (:cc0 state)) 0 0))
 
 (q/defsketch quil-midi
   :features [:keep-on-top :exit-on-close]
